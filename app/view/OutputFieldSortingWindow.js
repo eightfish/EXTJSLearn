@@ -1,8 +1,9 @@
-Ext.define('EvolveQueryEditor.view.OutputFieldSortingDialog', {
+Ext.define('EvolveQueryEditor.view.OutputFieldSortingWindow',
+{
 	extend : 'Ext.window.Window',
-	alias : 'widget.outputFieldSortingDialog',
+	alias : 'widget.outputFieldSortingWindow',
 
-	title : 'OutputField Sorting Dialog',
+	title : 'OutputField Sorting Window',
 	layout : 'fit',
 	autoshow : true,
 	modal : true,
@@ -16,22 +17,29 @@ Ext.define('EvolveQueryEditor.view.OutputFieldSortingDialog', {
 		'Ext.util.*',
 		'Ext.form.*',
 		'Ext.selection.CellModel',
-		'EvolveQueryEditor.model.OutputFieldModel'
+		'EvolveQueryEditor.model.OutputFieldModel',
+		'EvolveQueryEditor.store.SortingTypeStore'
 	],
 
-	initComponent : function () {
+	initComponent : function ()
+	{
 		var me = this;
-		var cellEditing = new Ext.grid.plugin.CellEditing({
+		var cellEditing = new Ext.grid.plugin.CellEditing(
+			{
 				clicksToEdit : 1
-			});
+			}
+			);
 
-		Ext.applyIf(me, {
-			items : [{
+		Ext.applyIf(me,
+		{
+			items : [
+				{
 					xtype : 'form',
 					width : 150,
-					items : [{
+					items : [
+						{
 							xtype : 'gridpanel',
-							id: 'sortingGrid',
+							id : 'sortingGrid',
 							region : 'center',
 							plugins : [cellEditing],
 							store : Ext.create('EvolveQueryEditor.store.OutputFieldStore'),
@@ -41,78 +49,92 @@ Ext.define('EvolveQueryEditor.view.OutputFieldSortingDialog', {
 							// dragText : 'Reorder sorting'
 							// }
 							// },
-							columns : [{
+							columns : [
+								{
 									text : 'Sorting Field',
 									dataIndex : 'fieldDescription',
 									sortable : false,
 									width : 150,
 									menuDisabled : true
-								}, {
+								},
+								{
 									text : 'Extraction Type',
 									dataIndex : 'extractionTypeDescription',
 									width : 150,
 									sortable : false,
 									menuDisabled : true
-								}, {
+								},
+								{
 									text : 'Sorting Type',
 									dataIndex : 'sortingType',
 									width : 100,
 									sortable : false,
 									menuDisabled : true,
 									flex : 1,
-									editor : {
+									editor :
+									{
 										xtype : 'combobox',
 										store : Ext.create('EvolveQueryEditor.store.SortingTypeStore'),
 										editable : false,
-										queryMode : 'local'
+										queryMode : 'local',
+										displayField : 'sortingType',
+										valueField : 'sortingTypeId'
 									},
 									renderer : me.onRendererSortType
 								}
-							],
-							listeners : {
-								select : {
-									fn : me.onSelectOutputField,
-									scope : me
-								}
-							}
-						}, {
+							]
+						},
+						{
 							xtype : 'container',
-							layout : {
+							layout :
+							{
 								type : 'vbox',
 								align : 'right'
 							},
-							items : [{
+							items : [
+								{
 									xtype : 'button',
 									text : 'Up',
-									listeners : {
-										click : {
+									listeners :
+									{
+										click :
+										{
 											fn : me.onSortingUp,
 											scope : me
 										}
 									}
-								}, {
+								},
+								{
 									xtype : 'button',
 									text : 'down',
-									listeners : {
-										click : {
+									listeners :
+									{
+										click :
+										{
 											fn : me.onSortingDown,
 											scope : me
 										}
 									}
-								}, {
+								},
+								{
 									xtype : 'button',
 									text : 'Top',
-									listeners : {
-										click : {
+									listeners :
+									{
+										click :
+										{
 											fn : me.onSortingTop,
 											scope : me
 										}
 									}
-								}, {
+								},
+								{
 									xtype : 'button',
 									text : 'Bottom',
-									listeners : {
-										click : {
+									listeners :
+									{
+										click :
+										{
 											fn : me.onSortingBottom,
 											scope : me
 										}
@@ -122,15 +144,19 @@ Ext.define('EvolveQueryEditor.view.OutputFieldSortingDialog', {
 						}
 					],
 					buttonAlign : 'center',
-					buttons : [{
+					buttons : [
+						{
 							text : 'OK',
-							listeners : {
-								click : {
+							listeners :
+							{
+								click :
+								{
 									fn : me.onClickOK,
 									scope : me
 								}
 							}
-						}, {
+						},
+						{
 							text : 'Cancel',
 							scope : me,
 							handler : me.close
@@ -138,13 +164,16 @@ Ext.define('EvolveQueryEditor.view.OutputFieldSortingDialog', {
 					]
 				}
 			]
-		});
+		}
+		);
 
 		me.callParent(arguments);
 	},
 
-	onRendererSortType : function (value) {
-		switch (value) {
+	onRendererSortType : function (value)
+	{
+		switch (value)
+		{
 		case 0:
 			return 'None';
 			break;
@@ -159,27 +188,61 @@ Ext.define('EvolveQueryEditor.view.OutputFieldSortingDialog', {
 		return value;
 	},
 
-	onClickOK : function () {
+	onClickOK : function ()
+	{
 		return null;
 	},
 
-	onSortingUp : function () {
-		return null;
+	sortStore : function (getExchangedRowIndex)
+	{
+		var grid = this.down('#sortingGrid');
+		var selectedRecord = grid.getSelectionModel().getSelection()[0];
+		if (selectedRecord == undefined)
+			return;
+
+		var store = grid.store;
+		var exchangedRowIndex = getExchangedRowIndex(store.indexOf(selectedRecord), store);
+
+		store.remove(selectedRecord);
+		store.insert(exchangedRowIndex, selectedRecord);
+
+		grid.getSelectionModel().deselectAll();
 	},
 
-	onSortingDown : function () {
-		return null;
+	onSortingUp : function ()
+	{
+		this.sortStore(function (selectedRowIndex, store)
+		{
+			return selectedRowIndex == 0 ? 0 : selectedRowIndex - 1;
+		}
+		);
 	},
 
-	onSortingTop : function () {
-		return null;
+	onSortingDown : function ()
+	{
+		this.sortStore(function (selectedRowIndex, store)
+		{
+			return selectedRowIndex == store.getCount() - 1 ? store.getCount() - 1 : selectedRowIndex + 1;
+		}
+		);
 	},
 
-	onSortingBottom : function () {
-		return null;
+	onSortingTop : function ()
+	{
+		this.sortStore(function (selectedRowIndex, store)
+		{
+			return 0;
+		}
+		);
 	},
 
-	onSelectOutputField : function (selModel, record, index, options) {
-		console.log(index);
+	onSortingBottom : function ()
+	{
+		this.sortStore(function (selectedRowIndex, store)
+		{
+			return store.getCount() - 1;
+		}
+		);
 	}
-});
+}
+);

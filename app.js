@@ -19,7 +19,7 @@ Ext.application({
 					xtype : 'button',
 					text : 'OutputField Sorting Dialog',
 					handler : function () {
-						var popedWindow = Ext.widget('outputFieldSortingDialog');
+						var popedWindow = Ext.widget('outputFieldSortingWindow');
 						popedWindow.show();
 					}
 				}

@@ -13,7 +13,7 @@ Ext.define('EvolveQueryEditor.store.OutputFieldStore', {
 					data : [{
 							fieldDescription : 'Account Code',
 							sortingIndex : 1,
-							sortingType : 0,
+							sortingType : 0, 
 							extractionTypeDescription : 'None'
 						}, {
 							fieldDescription : 'Base Amount',
