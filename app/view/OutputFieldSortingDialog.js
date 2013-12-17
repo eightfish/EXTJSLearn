@@ -11,11 +11,11 @@ Ext.define('EvolveQueryEditor.view.OutputFieldSortingDialog', {
 	width : 500,
 
 	requires : [
-		'Ext.selection.CellModel',
 		'Ext.grid.*',
 		'Ext.data.*',
 		'Ext.util.*',
 		'Ext.form.*',
+		'Ext.selection.CellModel',
 		'EvolveQueryEditor.model.OutputFieldModel'
 	],
 
@@ -62,11 +62,7 @@ Ext.define('EvolveQueryEditor.view.OutputFieldSortingDialog', {
 									flex : 1,
 									editor : {
 										xtype : 'combobox',
-										store : [
-											[0, 'None'],
-											[1, 'Ascending'],
-											[2, 'Descending']
-										],
+										store : Ext.create('EvolveQueryEditor.store.SortingTypeStore'),
 										editable : false,
 										queryMode : 'local'
 									},

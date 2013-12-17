@@ -5,11 +5,11 @@ Ext.define('EvolveQueryEditor.view.OutputFieldSortingList', {
 	title : 'All outputField',
 
 	requires : [
-		'Ext.selection.CellModel',
 		'Ext.grid.*',
 		'Ext.data.*',
 		'Ext.util.*',
 		'Ext.form.*',
+		'Ext.selection.CellModel',
 		'EvolveQueryEditor.model.OutputFieldModel'
 	],
 
@@ -23,21 +23,7 @@ Ext.define('EvolveQueryEditor.view.OutputFieldSortingList', {
 			plugins : [me.cellEditing],
 
 			store : Ext.create('Ext.data.Store', {
-				// model: ['EvolveQueryEditor.model.OutputFieldModel'],
-				fields : [{
-						name : 'fieldDescription',
-						type : 'string'
-					}, {
-						name : 'sortingIndex',
-						type : 'int'
-					}, {
-						name : 'sortingType',
-						type : 'int'
-					}, {
-						name : 'extractionTypeDescription',
-						type : 'string'
-					}
-				],
+				model: ['EvolveQueryEditor.model.OutputFieldModel'],
 				data : [{
 						fieldDescription : 'Account Code',
 						sortingIndex : 1,
@@ -78,11 +64,7 @@ Ext.define('EvolveQueryEditor.view.OutputFieldSortingList', {
 					flex : 1,
 					editor : {
 						xtype : 'combobox',
-						store : [
-							[0, 'None'],
-							[1, 'Ascending'],
-							[2, 'Descending']
-						],
+						store: Ext.create('EvolveQueryEditor.store.SortingTypeStore'),
 						editable : false,
 						queryMode : 'local'
 					},

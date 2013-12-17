@@ -25,7 +25,6 @@ Ext.define('EvolveQueryEditor.store.SortingTypeStore',
 			sortingType : 'Descending',
 			sortingTypeId : 2
 		}
-	],
-	autoLoad : true
+	]
 }
 );
