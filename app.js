@@ -20,7 +20,7 @@ Ext.application({
 					text : 'OutputField Sorting Dialog',
 					handler : function () {
 						var popedWindow = Ext.widget('outputFieldSortingDialog');
-						popedWindow.down('form').loadRecord();
+						popedWindow.show();
 					}
 				}
 			]
