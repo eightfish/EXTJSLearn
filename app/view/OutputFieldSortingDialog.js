@@ -31,9 +31,10 @@ Ext.define('EvolveQueryEditor.view.OutputFieldSortingDialog', {
 					width : 150,
 					items : [{
 							xtype : 'gridpanel',
+							id: 'sortingGrid',
 							region : 'center',
 							plugins : [cellEditing],
-							store: Ext.create('EvolveQueryEditor.store.OutputFieldStore'),
+							store : Ext.create('EvolveQueryEditor.store.OutputFieldStore'),
 							// viewConfig : {
 							// plugins : {
 							// ptype : 'gridviewdragdrop',
@@ -71,12 +72,68 @@ Ext.define('EvolveQueryEditor.view.OutputFieldSortingDialog', {
 									},
 									renderer : me.onRendererSortType
 								}
+							],
+							listeners : {
+								select : {
+									fn : me.onSelectOutputField,
+									scope : me
+								}
+							}
+						}, {
+							xtype : 'container',
+							layout : {
+								type : 'vbox',
+								align : 'right'
+							},
+							items : [{
+									xtype : 'button',
+									text : 'Up',
+									listeners : {
+										click : {
+											fn : me.onSortingUp,
+											scope : me
+										}
+									}
+								}, {
+									xtype : 'button',
+									text : 'down',
+									listeners : {
+										click : {
+											fn : me.onSortingDown,
+											scope : me
+										}
+									}
+								}, {
+									xtype : 'button',
+									text : 'Top',
+									listeners : {
+										click : {
+											fn : me.onSortingTop,
+											scope : me
+										}
+									}
+								}, {
+									xtype : 'button',
+									text : 'Bottom',
+									listeners : {
+										click : {
+											fn : me.onSortingBottom,
+											scope : me
+										}
+									}
+								}
 							]
 						}
 					],
+					buttonAlign : 'center',
 					buttons : [{
 							text : 'OK',
-							action : 'ok'
+							listeners : {
+								click : {
+									fn : me.onClickOK,
+									scope : me
+								}
+							}
 						}, {
 							text : 'Cancel',
 							scope : me,
@@ -104,5 +161,29 @@ Ext.define('EvolveQueryEditor.view.OutputFieldSortingDialog', {
 		}
 
 		return value;
+	},
+
+	onClickOK : function () {
+		return null;
+	},
+
+	onSortingUp : function () {
+		return null;
+	},
+
+	onSortingDown : function () {
+		return null;
+	},
+
+	onSortingTop : function () {
+		return null;
+	},
+
+	onSortingBottom : function () {
+		return null;
+	},
+
+	onSelectOutputField : function (selModel, record, index, options) {
+		console.log(index);
 	}
 });
