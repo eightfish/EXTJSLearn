@@ -1,7 +1,7 @@
-Ext.define('EvolveQueryEditor.view.OutputFieldSortingWindow',
+Ext.define('EvolveQueryEditor.view.SortingWindow',
 {
 	extend : 'Ext.window.Window',
-	alias : 'widget.outputFieldSortingWindow',
+	alias : 'widget.sortingWindow',
 
 	title : 'OutputField Sorting Window',
 	layout : 'fit',

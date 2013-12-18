@@ -4,7 +4,7 @@ Ext.define('EvolveQueryEditor.controller.OutputFieldSortingController', {
 	models: ['OutputFieldModel'],
 	
 	views: [
-		'OutputFieldSortingWindow'
+		'SortingWindow'
 	],
 	
 	init: function() {
