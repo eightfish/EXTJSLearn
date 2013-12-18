@@ -95,6 +95,7 @@ Ext.define('EvolveQueryEditor.view.OutputFieldSortingWindow',
 								{
 									xtype : 'button',
 									text : 'Up',
+									width: 50,
 									listeners :
 									{
 										click :
@@ -107,6 +108,7 @@ Ext.define('EvolveQueryEditor.view.OutputFieldSortingWindow',
 								{
 									xtype : 'button',
 									text : 'down',
+									width: 50,
 									listeners :
 									{
 										click :
@@ -119,6 +121,7 @@ Ext.define('EvolveQueryEditor.view.OutputFieldSortingWindow',
 								{
 									xtype : 'button',
 									text : 'Top',
+									width: 50,
 									listeners :
 									{
 										click :
@@ -131,6 +134,7 @@ Ext.define('EvolveQueryEditor.view.OutputFieldSortingWindow',
 								{
 									xtype : 'button',
 									text : 'Bottom',
+									width: 50,
 									listeners :
 									{
 										click :
